@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1 ,user-scalable=0">
+		<title>爬取时间分析-基于Redis的分布式爬虫</title>
+		<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+		<link href="{% static 'css/iconfont.css' %}" rel="stylesheet">
+		<link href="{% static 'css/common.css' %}" rel="stylesheet">
+		<link href="{% static 'css/analysis.css' %}" rel="stylesheet">
+		<!--[if lt IE 9]>
+      <script type="text/javascript" src="js/html5shiv.min.js"></script>
+      <script type="text/javascript"src="js/respond.min.js"></script>
+    <![endif]-->
+	</head>
+
+	<body>
+		<!-- 页头 -->
+		<header>
+			<nav class="navbar navbar-default common-nav">
+				<div class="container">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<a class="navbar-brand" href="index.html">
+							<i class="iconfont icon-drdsfenbushiguanxixingshujukufuwuDRD"></i><span>基于Redis的分布式爬虫</span>
+						</a>
+					</div>
+
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav navbar-right guide-login">
+{#							<li><a href="#">注册</a></li>#}
+{#							<li><a href="#">登录</a></li>#}
+                            {% if request.user.is_authenticated %}
+                                <li><a href="#">你好！{{ request.user.username}}，欢迎使用本系统</a></li>
+                                <li><a href="#"></a></li>
+                            {% else %}
+                                <li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm1">注册</a></li>
+                                <li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm">登录</a></li>
+                            {% endif %}
+						</ul>
+					</div><!-- /.navbar-collapse -->
+				</div><!-- /.container-fluid -->
+			</nav>
+		</header>
+
+		<section>
+			<div class="container">
+				<div class="row coreBlock">
+					<h1>爬取分析与图书查询</h1>
+					<div class="col-sm-6 coreBlockLeft coreBlockInfo">
+						<h2><span></span>爬取分析</h2>
+						<div id="main" style="width: 600px;height:400px;"></div>
+					</div>
+					<div class="col-sm-6 coreBlockRight coreBlockInfo">
+						<h2><span></span>图书查询</h2>
+						<div class="search-block-freedom">
+							<form action="{% url 'search' %}" method="get">
+								<input type="text" name="keyword" />
+								<button type="submit">搜索</button>
+							</form>
+						</div>
+						<div class="cl">
+							<div class="ti">
+								<div class="yuan"></div>
+								<h4>热门标签</h4>
+							</div>
+                            {% for category in category_list %}
+							<div class="cal">
+                                <a href="{% url 'show1' category_name=category.large_category %}" class="main_l">{{ category.large_category }}</a>
+								<div class="over" style="display: none">
+                                    {% for small,value in small_category_dict.items %}
+                                          {% if small == category.large_category %}
+                                               {% for x in value %}
+                                                   <div class="incl"><a href="{% url 'show2' category_name=x.0 %}">{{ x.0 }}</a></div>
+                                               {% endfor %}
+                                          {% endif %}
+                                    {% endfor %}
+								</div>
+							</div>
+                            {% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 页脚 -->
+		<footer >
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 col col-sm-6 col-xs-12 footer-label">中国大学生计算机设计大赛参赛项目</div>
+					<div class="col-md-4 col col-sm-6 col-xs-12 footer-label">河南工程学院计算机学院天码行空工作室</div>
+					<div class="col-md-4 col col-sm-6 col-xs-12 footer-label">版权所有 侵权必究</div>
+				</div>
+			</div>
+		</footer>
+		<script src="{% static 'js/jquery-1.12.4.js' %}"></script>
+		<script src="{% static 'js/bootstrap.min.js' %}"></script>
+		<script src="{% static 'js/echarts.js' %}"></script>
+		<script>
+			function my$(id) {
+				return document.getElementById(id);
+			}
+			//获取任意一个父级元素的最后一个元素
+			function getLastElementChild(element) {
+				if (element.lastElementChild) {
+					return element.lastElementChild;
+				} else {
+					var node = element.lastChild; //第一个子节点
+					while (node && node.nodeType != 1) {
+						node = node.previousSibling;
+					}
+					return node;
+				}
+			}
+			//获取主类的标签 
+			var ali = document.querySelectorAll(".cal");
+			//为所有主类标签注册鼠标进入事件
+			for (var i = 0; i < ali.length; i++) {
+				ali[i].onmouseover = function() {
+					this.lastElementChild.style.display = "block";
+				}
+				ali[i].onmouseout = function() {
+					this.lastElementChild.style.display = "none";
+				}
+			}
+		</script>
+		<script type="text/javascript">
+			// 基于准备好的dom，初始化echarts实例
+			var myChart = echarts.init(document.getElementById('main'));
+
+			// 指定图表的配置项和数据
+			option = {
+				xAxis: {
+					type: 'category',
+					data: ['Redis分布式爬取', 'Redis单机爬取', '非Redis单机爬取']
+				},
+				color: ['#E77637', '#E77637', '#ADD15B'],
+				yAxis: {
+					type: 'value'
+				},
+				series: [{
+				    {# todo views.py中读好数据传入此处，在此处改写echart数据 #}
+					data: [120, 200, 800],
+					type: 'bar'
+				}]
+			};
+			myChart.setOption(option);
+		</script>
+	</body>
+</html>

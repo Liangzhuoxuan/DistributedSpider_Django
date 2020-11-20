@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1 ,user-scalable=0">
+		<title>图书对比-基于Redis的分布式爬虫</title>
+		<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+		<link href="{% static 'css/iconfont.css' %}" rel="stylesheet">
+		<link href="{% static 'css/common.css' %}" rel="stylesheet">
+		<link href="{% static 'css/analysis.css' %}" rel="stylesheet">
+		<style>
+			.common-card>span:nth-child(2)>span {
+				color: #333;
+				font-size: 14px;
+				text-align: center;
+				font-weight: 100;
+			}
+		</style>
+		<!--[if lt IE 9]>
+      <script type="text/javascript" src="js/html5shiv.min.js"></script>
+      <script type="text/javascript"src="js/respond.min.js"></script>
+    <![endif]-->
+	</head>
+
+	<body>
+		<!-- 页头 -->
+		<header>
+			<nav class="navbar navbar-default common-nav">
+				<div class="container">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<a class="navbar-brand" href="index.html">
+							<i class="iconfont icon-drdsfenbushiguanxixingshujukufuwuDRD"></i><span>基于Redis的分布式爬虫</span>
+						</a>
+					</div>
+
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav navbar-right guide-login">
+{#							<li><a href="#">注册</a></li>#}
+{#							<li><a href="#">登录</a></li>#}
+                            {% if request.user.is_authenticated %}
+                                <li><a href="#">你好！{{ request.user.username}}，欢迎使用本系统</a></li>
+                                <li><a href="#"></a></li>
+                            {% else %}
+                                <li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm1">注册</a></li>
+                                <li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm">登录</a></li>
+                            {% endif %}
+						</ul>
+					</div><!-- /.navbar-collapse -->
+				</div><!-- /.container-fluid -->
+			</nav>
+		</header>
+
+		<section>
+			<div class="container">
+				<div class="row coreBlock">
+					<h1>各平台数据对比</h1>
+					<div class="col-lg-3 col-md-4 col-sm-5">
+						<div class="col-xs-10 common-card commom-remove-padding15 common-add-padding5 compareCard">
+							<span style="background-image: url({% static 'img/039251-1_b_6.jpg' %});"></span>
+							<span>
+								<span>左手爱孩子 右手立规律</span>
+								<span>出版社：立信会计出版社</span>
+								<span>ISBN：9787111213826</span>
+							</span>
+						</div>
+					</div>
+					<div class="col-sm-9 col-md-8 col-sm-7">
+						<table class="table table-striped compareTable">
+							<tr>
+								<th>平台</th>
+								<th>价格</th>
+								<th>评论数</th>
+								<th>好评率</th>
+							</tr>
+							<tr>
+								<td>京东</td>
+								<td>88.36元</td>
+								<td>233873</td>
+								<td>89%</td>
+							</tr>
+							<tr>
+								<td>京东</td>
+								<td>88.36元</td>
+								<td>233873</td>
+								<td>89%</td>
+							</tr>
+							<tr>
+								<td>京东</td>
+								<td>88.36元</td>
+								<td>233873</td>
+								<td>89%</td>
+							</tr>
+							<tr>
+								<td>京东</td>
+								<td>88.36元</td>
+								<td>233873</td>
+								<td>89%</td>
+							</tr>
+							<tr>
+								<td>京东</td>
+								<td>88.36元</td>
+								<td>233873</td>
+								<td>89%</td>
+							</tr>
+							<tr>
+								<td>京东</td>
+								<td>88.36元</td>
+								<td>233873</td>
+								<td>89%</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 页脚 -->
+		<footer>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 col col-sm-6 col-xs-12 footer-label">中国大学生计算机设计大赛参赛项目</div>
+					<div class="col-md-4 col col-sm-6 col-xs-12 footer-label">河南工程学院计算机学院天码行空工作室</div>
+					<div class="col-md-4 col col-sm-6 col-xs-12 footer-label">版权所有 侵权必究</div>
+				</div>
+			</div>
+		</footer>
+		<script src="{% static 'js/jquery-1.12.4.js' %}"></script>
+		<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	</body>
+</html>

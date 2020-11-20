@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1 ,user-scalable=0">
+		<title>首页-基于Redis的分布式爬虫</title>
+		<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+		<link href="{% static 'css/iconfont.css' %}" rel="stylesheet">
+		<link href="{% static 'css/style.css' %}" rel="stylesheet">
+		<link href="{% static 'css/common.css' %}" rel="stylesheet">
+		<link href="{% static 'css/index.css' %}" rel="stylesheet">
+		<link href="{% static 'css/animate.min.css' %}" rel="stylesheet">
+		
+		<!--[if lt IE 9]>
+      <script type="text/javascript" src="js/html5shiv.min.js"></script>
+      <script type="text/javascript"src="js/respond.min.js"></script>
+    <![endif]-->
+	</head>
+
+	<body style="background-color: #fff;">
+		<!-- 页头 -->
+		<header>
+			<nav class="navbar navbar-default common-nav">
+				<div class="container">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<a class="navbar-brand" href="index.html">
+							<i class="iconfont icon-drdsfenbushiguanxixingshujukufuwuDRD"></i><span>基于Redis的分布式爬虫</span>
+						</a>
+					</div>
+
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav navbar-right guide-login">
+{#							<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm1">注册</a></li>#}
+{#							<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm">登录</a></li>#}
+                            {% if request.user.is_authenticated %}
+                                <li><a href="#">你好！{{ request.user.username}}，欢迎使用本系统</a></li>
+                                <li><a href="#"></a></li>
+                            {% else %}
+                                <li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm1">注册</a></li>
+                                <li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm">登录</a></li>
+                            {% endif %}
+						</ul>
+					</div><!-- /.navbar-collapse -->
+				</div><!-- /.container-fluid -->
+			</nav>
+		</header>
+		<section class="indexCenterInfo">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-sm-7 indexInfoLeft" style="padding-left:100px">
+						<h1>基于Redis的分布式爬虫</h1>
+						<h3 class="animated flipInX"> <i class="iconfont icon-jiantouyou"></i> 提供了海量信息爬取时的单机内存不足的解决方案</h3>
+						<h3 class="animated flipInX"> <i class="iconfont icon-jiantouyou"></i> 通过爬取当当网与亚马逊网，实现同种商品之间的价格对比</h3>
+						<h3 class="animated flipInX lasth3"> <i class="iconfont icon-jiantouyou"></i> 通过echarts实现单机与分布式爬取速度的对比</h3>
+						<!-- <div class="col-sm-4 iconLeft">
+							<i class="iconfont icon-dangdangwang"></i>
+							<span>当当图书网</span>
+						</div>
+						<div class="col-sm-4 iconLeft">
+							<i class="iconfont icon-yamaxun"></i>
+							<span>亚马逊书城</span>
+						</div> -->
+						<a href="http://127.0.0.1:5000" class="startSystem">启动系统</a>
+					</div>
+					<div class="col-sm-5 indexInfoRight">
+						
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 中间动画 -->
+		<section class="indexCenterBlock">
+			<div class="night">
+			  <div class="shooting_star"></div>
+			  <div class="shooting_star"></div>
+			  <div class="shooting_star"></div>
+			  <div class="shooting_star"></div>
+			  <div class="shooting_star"></div>
+			  <div class="shooting_star"></div>
+			  <div class="shooting_star"></div>
+			  <div class="shooting_star"></div>
+			  <div class="shooting_star"></div>
+			  <div class="shooting_star"></div>
+			  <div class="shooting_star"></div>
+			  <div class="shooting_star"></div>
+			  <div class="shooting_star"></div>
+			  <div class="shooting_star"></div>
+			  <div class="shooting_star"></div>
+			  <div class="shooting_star"></div>
+			  <div class="shooting_star"></div>
+			  <div class="shooting_star"></div>
+			  <div class="shooting_star"></div>
+			  <div class="shooting_star"></div>
+			</div>
+		</section>
+		<!-- 登陆注册 -->
+		<section>
+			<!-- <button type="button" class="btn btn-primary" >Small modal</button> -->
+			<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+				<div class="modal-dialog modal-sm" role="document">
+					<div class="modal-content">
+						<form action="{% url 'login' %}" method="post">
+							<div class="form-group loginBody">
+								<span>用户登录</span>
+								<div class="infoBody">
+									<input type="text" name="username" class="form-control"  placeholder="请输入账号">
+									<input type="password" name="password" class="form-control"  placeholder="请输入账号">
+									 <button type="submit" class="btn btn-default">登录</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section>
+			<!-- <button type="button" class="btn btn-primary" >Small modal</button> -->
+			<div class="modal fade bs-example-modal-sm1" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+				<div class="modal-dialog modal-sm" role="document">
+					<div class="modal-content">
+						<form action="{% url 'register' %}" method="post">
+							<div class="form-group loginBody">
+								<span>用户注册</span>
+								<div class="infoBody">
+									<input type="text" name="username" class="form-control"  placeholder="请输入账号">
+									<input type="password" name="password" class="form-control"  placeholder="请输入密码">
+									 <button type="submit" class="btn btn-default">注册</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 页脚 -->
+		<!-- <footer class="indexFoot">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 col col-sm-6 col-xs-12 footer-label">中国大学生计算机设计大赛参赛项目</div>
+					<div class="col-md-4 col col-sm-6 col-xs-12 footer-label">河南工程学院计算机学院天码行空工作室</div>
+					<div class="col-md-4 col col-sm-6 col-xs-12 footer-label">版权所有 侵权必究</div>
+				</div>
+			</div>
+		</footer> -->
+		<script src="{% static 'js/jquery-1.12.4.js' %}"></script>
+		<script src="{% static 'js/bootstrap.min.js' %}"></script>
+        {# 执行弹窗操作 #}
+        {% if messages %}
+            <script>
+                {% for msg in messages %}
+                    alert('{{ msg.message }}');
+                {% endfor %}
+            </script>
+        {% endif %}
+	</body>
+</html>

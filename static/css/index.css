@@ -1,0 +1,146 @@
+.loginBody {}
+
+.loginBody span {
+	display: block;
+	line-height: 45px;
+	border-bottom: 1px solid #eee;
+	margin-bottom: 30px;
+	padding-left: 30px;
+}
+
+.loginBody .infoBody {
+	padding: 30px;
+	padding-top: 0;
+}
+
+.loginBody .infoBody input[type='text'] {
+	margin-bottom: 20px;
+	border: none;
+	/* outline: none; */
+	box-shadow: none;
+	border-bottom: 1px solid #eee;
+	border-radius: 0;
+}
+
+.loginBody .infoBody input[type='password'] {
+	margin-bottom: 40px;
+	border: none;
+	box-shadow: none;
+	/* border-bottom: 1px solid #222; */
+	border-radius: 0;
+	border-bottom: 1px solid #eee;
+}
+
+.loginBody .infoBody button {
+	width: 100%;
+	height: 40px;
+	line-height: 33px;
+	border: none;
+	background-color: #3162cb;
+	color: #fff;
+}
+
+.indexFoot {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+}
+
+header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	box-shadow: none;
+}
+header .navbar-default {
+	background-color: rgba(0,0,0,0);
+	z-index: 9999999;
+}
+.indexCenterBlock {
+	z-index: 1;
+}
+.indexCenterInfo {
+	position: absolute;
+	z-index: 2;
+	display: block;
+	top: 110px;
+	left: 0;
+	width: 100%;
+	height: 400px;
+	/* background-color: rgba(255,255,255,0.5); */
+}
+.indexInfoLeft h1 {
+	color: #fff;
+	margin-top: 50px;
+	margin-bottom: 30px;
+	font-size: 40px;
+	font-weight: 100;
+}
+.indexInfoLeft h3 {
+	color: #fff;
+	font-size: 20px;
+	font-weight: 100;
+	margin-bottom: 30px;
+}
+.indexInfoRight {
+	background-image: url(../img/001.png);
+	background-size: cover;
+	background-position: center center; 
+	height: 500px;
+}
+.icon-dangdangwang {
+	font-size: 100px;
+	line-height: 30px;
+	color: rgba(255,255,255,0.8);
+}
+.icon-yamaxun {
+	font-size: 100px;
+	line-height: 30px;
+	color: rgba(255,255,255,0.8);
+}
+.icon-dengkuanfenbu {
+	font-size: 30px;
+	line-height: 30px;
+	color: rgba(255,255,255,0.5);
+	margin-top: 40px;
+}
+.iconCenter {
+	text-align: center;
+}
+.iconRight {
+	text-align: right;
+}
+.iconLeft {
+	text-align: center;
+}
+.iconLeft span{
+	display: block;
+	color: #fff;
+	text-align: center;
+	font-weight: 100;
+}
+.lf {
+	padding-top: 30px;
+}
+.startSystem {
+	width: 280px;
+	color: #bbb;
+	border: 1px solid #bbb;
+	border-radius: 5px;
+	padding: 10px 60px;
+	margin-top: 50px;
+	display: block;
+	text-align: center;
+	/* background-color: rgba(255,255,255,0.1); */
+}
+.startSystem:hover,
+.startSystem:focus{
+	border: 1px solid #fff;
+	color: #ff6700;
+	background-color: #fff;
+	text-decoration: none;
+}
+.lasth3 {
+}

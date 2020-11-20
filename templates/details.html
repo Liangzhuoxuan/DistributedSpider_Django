@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+{% load static %}
+{% load myfilter %}
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1 ,user-scalable=0">
+		<title>详情页-基于Redis的分布式爬虫</title>
+		<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+		<link href="{% static 'css/iconfont.css' %}" rel="stylesheet">
+		<link href="{% static 'css/common.css' %}" rel="stylesheet">
+		<link href="{% static 'css/animate.min.css' %}" rel="stylesheet">
+		<!--[if lt IE 9]>
+      <script type="text/javascript" src="js/html5shiv.min.js"></script>
+      <script type="text/javascript"src="js/respond.min.js"></script>
+    <![endif]-->
+	</head>
+
+	<body style="background-color: #f5f5f5;">
+		<!-- 页头 -->
+		<header>
+			<nav class="navbar navbar-default common-nav">
+				<div class="container">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<a class="navbar-brand" href="{% url 'trackBack' %}">
+							<i class="iconfont icon-drdsfenbushiguanxixingshujukufuwuDRD"></i><span>基于Redis的分布式爬虫</span>
+						</a>
+					</div>
+
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav navbar-right guide-login">
+                            {# todo 把登录位置的名字改为注册号的名字 #}
+                            {% if request.user.is_authenticated %}
+                                <li><a href="#">你好！{{ request.user.username}}，欢迎使用本系统</a></li>
+                                <li><a href="#"></a></li>
+                            {% else %}
+                                <li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm1">注册</a></li>
+                                <li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm">登录</a></li>
+                            {% endif %}
+						</ul>
+					</div><!-- /.navbar-collapse -->
+				</div><!-- /.container-fluid -->
+			</nav>
+		</header>
+
+		<section class="container">
+			<div class="row rowrow">
+				<div class="search-block">
+					<form action="{% url 'search' %}" method="get">
+						<input type="text" name="keyword" />
+						<button type="submit">搜索</button>
+					</form>
+				</div>
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs mynav">
+                    {% if not witch %}
+                        <li class="active"><a href="{% url 'callback' category_name=category_name %}#home" data-toggle="tab">综合排序</a></li>
+                        <li><a href="{% url 'sort_by_price' category_name=category_name %}#profile">价格</a></li>
+                        <li><a href="{% url 'sort_by_comments' category_name=category_name %}#messages">评论数</a></li>
+                    {% elif witch == 'pri' %}
+                        <li><a href="{% url 'callback' category_name=category_name %}#home">综合排序</a></li>
+                        <li class="active"><a href="{% url 'sort_by_price' category_name=category_name %}#profile" data-toggle="tab">价格</a></li>
+                        <li><a href="{% url 'sort_by_comments' category_name=category_name %}#messages">评论数</a></li>
+                    {% else %}
+                        <li><a href="{% url 'callback' category_name=category_name %}#home">综合排序</a></li>
+                        <li><a href="{% url 'sort_by_price' category_name=category_name %}#profile" data-toggle="tab">价格</a></li>
+                        <li class="active"><a href="{% url 'sort_by_comments' category_name=category_name %}#messages">评论数</a></li>
+                    {% endif %}
+
+				</ul>
+
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div class="tab-pane active" id="home">
+						<a class="col-lg-3 imgblock hidden-md hidden-sm hidden-xs" style="background-image: url({% static 'img/limg.jpg' %});" href="http://127.0.0.1:5000"></a>
+						<div class="col-lg-9 col-xs-12">
+                        {% for book,img in new_list %}
+							<div class="col-md-3 col-sm-4 col-xs-6 common-card commom-remove-padding15 common-add-padding5">
+								{% if img %}
+								<span style="background-image: url({% static img %});"></span>
+								{% else %}
+								<span style="background-image: url({% static 'img/none123.jpg' %});"></span>
+								{% endif %}
+								<span>
+									<span>{{ book.title }}</span>
+{#									<span>静涛+立信会计出版社+现代家教新理念静涛+立信会计出版社+现代家教新理念静涛+立信会计出版社+现代家教新理念静涛+立信会计出版社+现代家教新理念</span>#}
+									{% if book.author == book.publisher and book.author == '[]' %}
+                                        {% elif book.author == book.publisher %}
+                                            <span title="{{ book.publisher|get_real_publisher }}">{{ book.publisher|get_real_publisher }}</span>
+                                        {% else %}
+                                            <span title="{{ book.author|get_real_author }}">{{ book.author|get_real_author }}+{{ book.publisher|get_real_publisher }}</span>
+{#                                            <span title="{{ book.publisher|get_real_publisher }}"></span>#}
+                                    {% endif %}
+                                    <span>￥{{ book.price }}</span>
+                                    <span>{{ book.comments }}条评论</span>
+								</span>
+								<span>{{ book.small_category }}</span>
+								<div class="slideToTop">
+									<div><a href="{% url 'two_compare' %}">图书对比</a></div>
+								</div>
+
+							</div>
+                        {% endfor %}
+					</div>
+				</div>
+                </div>
+			</div>
+		</section>
+		<div class="container">
+			<div class="col-lg-9 col-lg-pull-1">
+
+			</div>
+			<nav class="skip-page">
+{#				<ul class="pagination">#}
+{#					<li>#}
+{#						<a href="#">#}
+{#							<span>&laquo;</span>#}
+{#						</a>#}
+{#					</li>#}
+{#					<li><a href="#">1</a></li>#}
+{#					<li><a href="#">2</a></li>#}
+{#					<li><a href="#">3</a></li>#}
+{#					<li><a href="#">4</a></li>#}
+{#					<li><a href="#">5</a></li>#}
+{#					<li>#}
+{#						<a href="#">#}
+{#							<span>&raquo;</span>#}
+{#						</a>#}
+{#					</li>#}
+{#				</ul>#}
+                <ul class="pagination">
+					{% if books.has_previous %}
+					<li>
+						<a onclick="button_page(this,{{ books.number }})">
+							<span>&laquo;</span>
+						</a>
+					</li>
+					{% endif %}
+                    <li><a onclick="button_page(this,{{ books.number }})"  title="{{ books.number }}">{{ books.number }}</a></li>
+					<li><a  onclick="button_page(this,{{ books.number|add:"1" }})" class="" title="{{ books.number|add:"1" }}">{{ books.number|add:"1" }}</a></li>
+				    <li><a onclick="button_page(this,{{ books.number|add:"2" }})" class="" title="{{ books.number|add:"2" }}">{{ books.number|add:"2" }}</a></li>
+				    <li><a onclick="button_page(this,{{ books.number|add:"3" }})" class="" title="{{ books.number|add:"3" }}">{{ books.number|add:"3" }}</a></li>
+				    <li><a onclick="button_page(this,{{ books.number|add:"4" }})" class="" title="{{ books.number|add:"4" }}">{{ books.number|add:"4" }}</a></li>
+					<li><a href="">...</a></li>
+                    <li><a onclick="button_page(this,{{ books.paginator.num_pages }})"  title="{{ books.paginator.num_pages }}">{{ books.paginator.num_pages }}</a></li>
+
+{#                    {{ books.paginator.num_pages }}#}
+					{% if books.has_next %}
+					<li>
+						<a onclick="nextPage(this)" title="点击此处可以翻到下一页哦！">
+							<span>&raquo;</span>
+						</a>
+					</li>
+					{% endif %}
+				</ul>
+			</nav>
+
+		</div>
+		<!-- 页脚 -->
+		<footer>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 col col-sm-6 col-xs-12 footer-label">中国大学生计算机设计大赛参赛项目</div>
+					<div class="col-md-4 col col-sm-6 col-xs-12 footer-label">河南工程学院计算机学院天码行空工作室</div>
+					<div class="col-md-4 col col-sm-6 col-xs-12 footer-label">版权所有 侵权必究</div>
+				</div>
+			</div>
+		</footer>
+		<script src="{% static 'js/jquery-1.12.4.js' %}"></script>
+		<script src="{% static 'js/bootstrap.min.js' %}"></script>
+		<script>
+			$(function() {
+				$(".common-card").mouseover(function() {
+					$(this).children(".slideToTop").slideDown();
+				});
+				$(".common-card").mouseleave(function() {
+					$(this).children(".slideToTop").slideUp();
+				});
+			});
+		</script>
+        <script>
+	//翻页js
+    function getUrl() {
+        var current_url = window.location.href;
+        var params = current_url.split('?');
+        var url = '';
+        var flag = 0;
+        //如果没有keyword这个字符串
+        if (current_url.indexOf("keyword") == -1) {
+            //没有参数
+            if (params.length == 1) {
+                url += '?'
+            }
+            else {
+                for (i = 0; i < params.length; i++) {
+                    if (params[i].indexOf('page') == -1) {
+                        if (i == 0) {
+                            url += params[i] + '?';
+                            url += params[i] + '?';
+                        } else {
+                            url += params[i] + '&';
+                        }
+                    }
+                }
+            }
+        } else {
+            var mm = current_url.split('&');
+            url = mm[0] + "&";
+        }
+        return url;
+    }
+    //下一页
+    function nextPage(node) {
+        var url = getUrl()
+        {% if books.has_next %}
+            var href = url + "page={{ books.next_page_number}}"
+        {% else %}
+            var href = url + "page={{ books.number }}"
+        {% endif %}
+        node.href = href
+    }
+    //上一页
+    function previousPage(node) {
+        var url = getUrl()
+        {% if books.has_previous %}
+            var href = url + "page={{ books.previous_page_number}}"
+        {% else %}
+            var href = url + "page={{ books.number }}"
+        {% endif %}
+        node.href = href
+    }
+    //点击某一页的按钮跳转到指定的那一页
+    //这个函数是后端人员写的~~滑稽
+    function button_page(node,mynumber) {
+        var url = getUrl()
+        var href = url + "page=" + mynumber
+        node.href = href
+    }
+
+    function page(node) {
+        var url = getUrl()
+        node.href = url + 'page=' + node.text
+    }
+
+    function turnPage(node) {
+        var page = $("#input_page").val()
+        var url = getUrl()
+        node.href = url +'page=' + page
+    }
+</script>
+	</body>
+</html>

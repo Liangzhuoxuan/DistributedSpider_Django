@@ -1,0 +1,128 @@
+.coreBlock {}
+.coreBlock h1{
+	text-align: center;
+	margin-bottom: 30px;
+}
+.coreBlockLeft {
+	overflow: hidden;
+}
+.coreBlockRight {
+	border-left: 1px dashed #e1e1e1 ;
+	height: 500px;
+	padding-left: 30px;
+}
+.coreBlockInfo {
+}
+.coreBlockInfo h2{
+	padding-bottom: 30px;
+	font-size: 16px;
+	font-weight: 100;
+}
+.coreBlockInfo span{
+	border-right: 3px solid #005EED;
+	margin-right: 8px;
+}
+.search-block-freedom {
+	width: 80%;
+}
+.search-block-freedom form{
+	padding-right: 80px;
+	position: relative;
+}
+.search-block-freedom form input{
+	width: 100%;
+	height: 35px;
+	border: 0;
+	border: 1px solid #005EED;
+	padding-left: 8px;
+	border-right: 0;
+	outline: none;
+}
+.search-block-freedom form button{
+	height: 35px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 80px;
+	outline: none;
+	background-color: #005EED;
+	outline: none;
+	border: 1px solid #005EED;
+	color: #eee;
+	border-bottom-right-radius: 3px;
+	border-top-right-radius: 3px;
+}
+.search-block-freedom form button:hover {
+	background-color: #0e52b9;
+	color: #fff;
+}
+/* 搜索 */
+.cl {
+		width: 80%;
+		margin: auto;
+		margin-top: 100px;
+		position: relative;
+		margin-bottom: 100px;
+	}
+	.incl,
+	.cal {
+		line-height: 20px;
+		margin-right: 5px;
+		display: inline-block;
+		background: url(1.png) right center no-repeat;
+		position: relative;
+		box-sizing: border-box;
+		margin-bottom: 10px;
+		/*background-color: red;*/
+	}
+	.cal {
+		border: 1px solid rgba(0,0,0,0);
+	}
+	.cl .over a,
+	.cl a {
+		box-sizing: border-box;
+		font-family: "Arial";
+		font-size: 14px;
+		display: block;
+		text-decoration: none;
+		color: #2e2e2e;
+		background-color: #f8f8f8;
+		padding: 3px 10px;
+		color: #3377aa;
+	}
+	.cl .over {
+		position: relative;
+		box-sizing: border-box;
+		padding:10px 30px;
+		width: 400px;
+		position: absolute;
+		background-color: #fff;
+		top: 21px;
+		left: -80px;
+		border: 1px solid #eee;
+		z-index: 1000;
+	}
+	.incl:hover a,
+	.cal .main_l:hover {
+		text-decoration: underline;
+		color: #f300f6;
+	}
+	.cal .main_l:hover .main_l{
+		background-color: #fff;
+		border: 1px solid #eee;
+	}
+	.ti {
+		width: 80px;
+		line-height: 28px;
+		position: absolute;
+		top: -50px;
+		left: -50px;
+	}
+	.cal>.main_l:hover,
+	.cal .incl>a:hover,
+	.cal .incl>a:focus,
+	.cal .incl>a:active{
+		color: #3377aa;
+		text-decoration: none;
+		background-color: #e8e8e8;
+	} 
